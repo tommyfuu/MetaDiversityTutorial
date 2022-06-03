@@ -1,6 +1,7 @@
 # MetaDiversityTutorial
 
-__AUTHOR__: Tom Fu
+__AUTHOR__: Chenlian (Tom) Fu
+
 __AFFILIATION__: Tri-institutional Program in Computational Biology and Medicine; Baylor College of Medicine.
 
 
