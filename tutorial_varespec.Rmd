@@ -1,0 +1,72 @@
+---
+title: "Simple tutorial for alpha/beta diversity"
+author: "Tom Fu"
+date: "6/2/2022"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Intro
+
+Here is a simple tutorial on how to do alpha diversity/beta diversity analyses, visualize the results, and conduct group-wise significance testing on the differences between means for the diversities in R. All statistical analyses are done with vegan and betapart, two known analytic packages for metagenomics analysis; and visualizations are done with ggplot2. While I can't believe that no one has put this together to streamline these analysis as there are so many papers out there containing such analysis, here it is!
+
+```{r}
+library(betapart)
+library(vegan)
+library(ggplot2)
+```
+
+## 1. Load data
+
+You can definitely load and use your own data, here we use a data given in the vegan package. As you can see below, the row names are sample names/numbers. and the column names are the metagenomic taxonomies.
+
+```{r}
+data("varespec")
+varespec
+```
+
+Here we manually synthesize the metadata: two groups we are trying to compare: the "undisturbed" and "disturbed" treatment groups.
+
+```{r}
+groups <- factor(c(rep(1,12), rep(2,12)), labels = c("undisturbed","disturbed"))
+groups
+```
+
+## 2. alpha diversity
+
+Alpha diversity measures the within-sample microbiome diversity. Comparing the alpha diversity of two groups of samples thus look at whether two groups differ significantly in terms of each member's (sample's) species composition. We first generate all the alpha diversity using vegan, then compare across the two groups using one-way anova. Note that here we use the Shannon index, you can easily use other statistics such as the Fisher index if you prefer.
+
+```{r}
+alphaDiversity <- diversity(varespec, index="shannon")
+summary(aov(alphaDiversity ~ groups))
+```
+
+We then visualize the two groups using ggplot2.
+
+```{r}
+alphaDataframe <- data.frame(alphaDiversity, groups)
+p<-ggplot(alphaDataframe, aes(x=groups, y=alphaDiversity)) + 
+  geom_dotplot(binaxis='y', stackdir='center')+
+  ggtitle("Shannon Alpha Diversity")
+p
+```
+
+## 3. beta diversity
+
+Beta diversity measures the between-sample similarity/dissimilarity in terms of microbiome diversity. Comparing the beta diversity of two groups of samples thus look at whether two groups differ significantly in terms of how much the microbial diverity samples within each group differ from each other. We now calculate beta diversity, visualize it, and conduct statistical test to compare between two groups.
+
+```{r}
+# first compute pairwise bray-curtis similarity matrix
+dist <- vegdist(varespec, method = "bray")
+# decompose the matrix into 2d dispersion values that are plottable and analyzable
+betaDiversityDispersion<-betadisper(dist,groups)
+# plot beta diversity and analyze
+plot(betaDiversityDispersion)
+anova(betaDiversityDispersion)
+```
+
+
+
