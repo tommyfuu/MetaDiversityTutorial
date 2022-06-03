@@ -2,7 +2,9 @@
 title: "Simple tutorial for alpha/beta diversity"
 author: "Tom Fu"
 date: "6/2/2022"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -25,7 +27,7 @@ You can definitely load and use your own data, here we use a data given in the v
 
 ```{r}
 data("varespec")
-varespec
+head(varespec)
 ```
 
 Here we manually synthesize the metadata: two groups we are trying to compare: the "undisturbed" and "disturbed" treatment groups.

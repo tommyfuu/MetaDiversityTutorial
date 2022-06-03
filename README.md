@@ -7,7 +7,7 @@ __AFFILIATION__: Tri-institutional Program in Computational Biology and Medicine
 
 Incredibly simple tutorial for conducting alpha diversity and beta-diversity analysis, visualization, and group-wise comparison in R. I wrote this because I was so confused by everything available on the internet and decided to dig into a bunch of documentations and blog posts to find the simplest ways to do alpha-/beta- diversity analyses!
 
-Please check out the RMD tutorial for detailed analysis! (very simple!) If you like this repo, please star it so more people can see it!
+Please check out the RMD/PDF tutorial for detailed analysis! (very simple!) If you like this repo, please star it so more people can see it!
 
 Sources:
 - [vegan](https://onlinelibrary.wiley.com/doi/10.1111/j.1654-1103.2003.tb02228.x), Philip Dixon
